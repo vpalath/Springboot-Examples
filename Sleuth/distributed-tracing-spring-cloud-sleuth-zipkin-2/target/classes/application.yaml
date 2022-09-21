@@ -1,0 +1,32 @@
+server:
+  port: 8090
+spring:
+  zipkin:
+    baseUrl: http://localhost:9411
+  application:
+    name: Service-2
+
+  sleuth:
+    baggage:
+      correlation-enabled: true
+      correlation-fields:
+         request-Id
+#      local-fields:
+#        - request-Id
+      remote-fields:
+         request-Id
+#      tag-fields:
+#        - request-Id
+#    propagation:
+#      type: b3
+
+    trace-id128: true
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:-},%X{traceId:-},%X{spanId:-},%X{request-Id:-}]"
+
+
+#logging:
+#  pattern:
+#    level: %5p[${spring.zipkin.service.name:${spring.application.name:-}},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-B3-RequestId:-}]
+
